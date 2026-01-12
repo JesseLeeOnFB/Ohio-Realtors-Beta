@@ -7,7 +7,7 @@ import { getStorage, ref as storageRef, uploadBytes }
 
 // Firebase config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyCJyO1S8WQqnfjl2JC8aE63fd_q2RDS3fw",
   authDomain: "ohio-realtors-beta.firebaseapp.com",
   projectId: "ohio-realtors-beta",
   storageBucket: "ohio-realtors-beta.appspot.com",
