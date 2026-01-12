@@ -1,26 +1,37 @@
 import { PDFDocument } from 'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js';
 
-const apiKey = "AIzaSyCSboJdzETN2mIDzmErQHbN_gpkJt-vKoI";
+const fillBtn = document.getElementById('fillBtn');
+const status = document.getElementById('status');
 
-// Google login callback
-function handleCredentialResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
-    document.getElementById('status').innerText = "Logged in!";
-}
+// Enable button only if logged in
+window.onload = () => {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        status.innerText = "Already logged in!";
+        fillBtn.disabled = false;
+    }
+};
 
-// PDF Autofill
-document.getElementById('fillBtn').addEventListener('click', async () => {
+// Google Login callback
+window.handleCredentialResponse = (response) => {
+    console.log("Google ID token:", response.credential);
+    localStorage.setItem('loggedIn', 'true');
+    status.innerText = "Logged in!";
+    fillBtn.disabled = false;
+};
+
+// Fill PDFs
+fillBtn.addEventListener('click', async () => {
     const buyer = document.getElementById('buyerName').value;
     const seller = document.getElementById('sellerName').value;
     const address = document.getElementById('propertyAddress').value;
     const addendums = document.getElementById('addendums').value;
+    const files = document.getElementById('pdfUpload').files;
 
     if (!buyer || !seller || !address) {
         alert("Buyer, Seller, and Property Address are required.");
         return;
     }
 
-    const files = document.getElementById('pdfUpload').files;
     if (!files.length) {
         alert("Please upload at least one broker PDF.");
         return;
@@ -33,7 +44,7 @@ document.getElementById('fillBtn').addEventListener('click', async () => {
             const pdfDoc = await PDFDocument.load(arrayBuffer);
             const form = pdfDoc.getForm();
 
-            // Fill text fields — make sure your PDF fields match these names
+            // Fill fields - make sure PDF fields match these names
             try { form.getTextField('buyer').setText(buyer); } catch {}
             try { form.getTextField('seller').setText(seller); } catch {}
             try { form.getTextField('address').setText(address); } catch {}
@@ -52,5 +63,5 @@ document.getElementById('fillBtn').addEventListener('click', async () => {
         }
     }
 
-    document.getElementById('status').innerText = "All PDFs filled and downloaded!";
+    status.innerText = "All PDFs filled and downloaded!";
 });
