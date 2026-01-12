@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Ohio Realtors PDF Filler</title>
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 <script async defer src="https://apis.google.com/js/api.js"></script>
 <script type="module" src="script.js"></script>
 </head>
@@ -13,7 +14,13 @@
 
   <h2>Upload Broker PDFs</h2>
   <input type="file" id="pdfInput" multiple />
-  <button id="uploadBtn">Upload PDF(s)</button>
+  <button id="uploadBtn">Upload PDF(s) to Drive</button>
+
+  <h2>Fill Contract</h2>
+  <label>Buyer Name: <input type="text" id="buyerName" /></label><br>
+  <label>Seller Name: <input type="text" id="sellerName" /></label><br>
+  <label>Property Address: <input type="text" id="address" /></label><br>
+  <button id="fillBtn">Fill PDF</button>
 
   <div id="status"></div>
 </body>
