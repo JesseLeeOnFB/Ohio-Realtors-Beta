@@ -1,29 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ohio Realtors Beta</title>
+<meta charset="UTF-8">
+<title>Ohio Realtors PDF Filler</title>
+<script async defer src="https://apis.google.com/js/api.js"></script>
+<script type="module" src="script.js"></script>
 </head>
 <body>
-  <h1>Ohio Realtors Beta</h1>
+  <h1>Ohio Realtors PDF Filler</h1>
 
-  <div id="authDiv">
-    <h2>Register / Login</h2>
-    <input type="email" id="emailInput" placeholder="Email">
-    <input type="password" id="passwordInput" placeholder="Password">
-    <button id="registerBtn">Register</button>
-    <button id="loginBtn">Login</button>
-    <p id="authStatus"></p>
-  </div>
+  <button id="loginBtn">Login with Google</button>
 
-  <div id="appDiv" style="display:none">
-    <h2>Upload PDF Templates</h2>
-    <input type="file" id="pdfUpload" multiple accept=".pdf">
-    <button id="uploadBtn">Upload</button>
-    <p id="uploadStatus"></p>
-  </div>
+  <h2>Upload Broker PDFs</h2>
+  <input type="file" id="pdfInput" multiple />
+  <button id="uploadBtn">Upload PDF(s)</button>
 
-  <script type="module" src="script.js"></script>
+  <div id="status"></div>
 </body>
 </html>
