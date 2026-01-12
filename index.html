@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ohio Realtors Beta</title>
+</head>
+<body>
+  <h1>Ohio Realtors Beta</h1>
+
+  <div id="authDiv">
+    <h2>Register / Login</h2>
+    <input type="email" id="emailInput" placeholder="Email">
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button id="registerBtn">Register</button>
+    <button id="loginBtn">Login</button>
+    <p id="authStatus"></p>
+  </div>
+
+  <div id="appDiv" style="display:none">
+    <h2>Upload PDF Templates</h2>
+    <input type="file" id="pdfUpload" multiple accept=".pdf">
+    <button id="uploadBtn">Upload</button>
+    <p id="uploadStatus"></p>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
