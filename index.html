@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ohio Realtors Beta</title>
+<style>
+  body { font-family:sans-serif; background:#eef2f5; color:#222; text-align:center; padding:20px; }
+  input, textarea, button { padding:10px; margin:5px; width:80%; max-width:400px; }
+  form { margin-top:20px; }
+  #status { margin-top: 10px; color: red; }
+</style>
+</head>
+<body>
+<h1>Ohio Realtors Beta</h1>
+<p>Sign in with Google to get started</p>
+<button id="loginBtn">Sign in with Google</button>
+<div id="status"></div>
+
+<form id="pdfForm" style="display:none;">
+  <input type="file" id="pdfInput" accept="application/pdf"><br>
+  <input type="text" id="buyerName" placeholder="Buyer Name"><br>
+  <input type="text" id="sellerName" placeholder="Seller Name"><br>
+  <input type="text" id="property" placeholder="Property Address"><br>
+  <textarea id="addendums" placeholder="Optional Addendums"></textarea><br>
+  <button type="submit">Upload & Fill PDF</button>
+</form>
+
+<script src="script.js"></script>
+</body>
+</html>
