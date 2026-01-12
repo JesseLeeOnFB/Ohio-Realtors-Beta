@@ -3,102 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <title>Ohio Realtors Beta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: url('assets/IMG_2835.jpeg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.7);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .input-group {
-      margin: 10px 0;
-      display: flex;
-      flex-direction: column;
-      width: 320px;
-    }
-
-    input, textarea {
-      padding: 10px;
-      font-size: 1em;
-      border-radius: 5px;
-      border: none;
-      margin-top: 5px;
-      outline: none;
-    }
-
-    button {
-      padding: 12px 20px;
-      font-size: 1em;
-      margin-top: 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      background-color: #28a745;
-      color: #fff;
-    }
-
-    #status {
-      margin-top: 15px;
-      font-weight: bold;
-    }
+    body { margin:0; font-family:Arial,sans-serif; background:#222; color:#fff; }
+    .container { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:20px; }
+    input, textarea, button { padding:10px; margin:5px 0; border-radius:5px; border:none; font-size:1em; width:100%; max-width:350px; }
+    #dragDrop { border:2px dashed #fff; padding:20px; text-align:center; border-radius:5px; margin-top:10px; }
+    button { background:#28a745; color:#fff; cursor:pointer; }
+    #status { margin-top:10px; text-align:center; }
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <h1>Ohio Realtors Beta - PDF Autofill</h1>
+  <div class="container">
+    <h1>Ohio Realtors PDF Autofill</h1>
 
+    <!-- Google Login Button -->
     <div id="g_id_onload"
          data-client_id="865490150118-ti166sdlmjgqrcd552ttigauldt36ik5.apps.googleusercontent.com"
          data-callback="handleCredentialResponse"
          data-auto_prompt="false">
     </div>
-
     <div class="g_id_signin" data-type="standard"></div>
 
-    <div class="input-group">
-      <label>Buyer Name</label>
-      <input type="text" id="buyerName" placeholder="Enter buyer's full name">
-    </div>
+    <!-- Input Fields -->
+    <input type="text" id="buyerName" placeholder="Buyer Name">
+    <input type="text" id="sellerName" placeholder="Seller Name">
+    <input type="text" id="propertyAddress" placeholder="Property Address">
+    <textarea id="addendums" rows="3" placeholder="Additional Notes / Addendums (Optional)"></textarea>
 
-    <div class="input-group">
-      <label>Seller Name</label>
-      <input type="text" id="sellerName" placeholder="Enter seller's full name">
-    </div>
-
-    <div class="input-group">
-      <label>Property Address</label>
-      <input type="text" id="propertyAddress" placeholder="Enter property address">
-    </div>
-
-    <div class="input-group">
-      <label>Additional Notes / Addendums</label>
-      <textarea id="addendums" rows="3" placeholder="Optional notes or addendums"></textarea>
-    </div>
-
-    <div class="input-group">
-      <label>Upload Broker PDF(s)</label>
-      <input type="file" id="pdfUpload" multiple accept="application/pdf">
-    </div>
+    <!-- PDF Upload -->
+    <div id="dragDrop">Drag & drop PDFs here (desktop)</div>
+    <input type="file" id="pdfUpload" multiple accept="application/pdf">
 
     <button id="fillBtn" disabled>Fill & Download PDFs</button>
     <div id="status"></div>
