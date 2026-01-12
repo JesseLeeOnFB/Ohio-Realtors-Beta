@@ -17,7 +17,7 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.6);
+      background-color: rgba(0,0,0,0.7);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -34,7 +34,7 @@
       margin: 10px 0;
       display: flex;
       flex-direction: column;
-      width: 300px;
+      width: 320px;
     }
 
     input, textarea {
@@ -67,6 +67,14 @@
   <div class="overlay">
     <h1>Ohio Realtors Beta - PDF Autofill</h1>
 
+    <div id="g_id_onload"
+         data-client_id="865490150118-ti166sdlmjgqrcd552ttigauldt36ik5.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+
+    <div class="g_id_signin" data-type="standard"></div>
+
     <div class="input-group">
       <label>Buyer Name</label>
       <input type="text" id="buyerName" placeholder="Enter buyer's full name">
@@ -92,15 +100,7 @@
       <input type="file" id="pdfUpload" multiple accept="application/pdf">
     </div>
 
-    <div id="g_id_onload"
-         data-client_id="865490150118-ti166sdlmjgqrcd552ttigauldt36ik5.apps.googleusercontent.com"
-         data-callback="handleCredentialResponse"
-         data-auto_prompt="false">
-    </div>
-
-    <div class="g_id_signin" data-type="standard"></div>
-
-    <button id="fillBtn">Fill & Download PDFs</button>
+    <button id="fillBtn" disabled>Fill & Download PDFs</button>
     <div id="status"></div>
   </div>
 
