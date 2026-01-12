@@ -1,72 +1,56 @@
 import { PDFDocument } from 'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js';
 
-const CLIENT_ID = "865490150118-ti166sdlmjgqrcd552ttigauldt36ik5.apps.googleusercontent.com";
-const API_KEY = "AIzaSyCkHCYkSmQvRE84DrwfPqwUrOGjpS_ItFs";
+const apiKey = "AIzaSyCSboJdzETN2mIDzmErQHbN_gpkJt-vKoI";
 
-let gapiInited = false;
-let authInstance;
-
-function gapiLoaded() {
-  gapi.load('client:auth2', initializeGapiClient);
+// Google login callback
+function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+    document.getElementById('status').innerText = "Logged in!";
 }
-
-async function initializeGapiClient() {
-  await gapi.client.init({
-    apiKey: API_KEY,
-    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"]
-  });
-
-  authInstance = gapi.auth2.init({
-    client_id: CLIENT_ID
-  });
-
-  document.getElementById('loginBtn').addEventListener('click', async () => {
-    try {
-      const user = await authInstance.signIn();
-      document.getElementById('status').innerText = "Logged in as " + user.getBasicProfile().getName();
-    } catch (err) {
-      console.error("Login error:", err);
-      alert("Google login failed. Check console for details.");
-    }
-  });
-}
-
-gapiLoaded();
 
 // PDF Autofill
 document.getElementById('fillBtn').addEventListener('click', async () => {
-  const buyer = document.getElementById('buyerName').value;
-  const seller = document.getElementById('sellerName').value;
-  const address = document.getElementById('propertyAddress').value;
-  const addendums = document.getElementById('addendums').value;
+    const buyer = document.getElementById('buyerName').value;
+    const seller = document.getElementById('sellerName').value;
+    const address = document.getElementById('propertyAddress').value;
+    const addendums = document.getElementById('addendums').value;
 
-  if (!buyer || !seller || !address) {
-    alert("Buyer, Seller, and Property Address are required.");
-    return;
-  }
+    if (!buyer || !seller || !address) {
+        alert("Buyer, Seller, and Property Address are required.");
+        return;
+    }
 
-  // Load your PDF template from assets folder
-  const existingPdfBytes = await fetch('assets/sample-contract.pdf').then(res => res.arrayBuffer());
+    const files = document.getElementById('pdfUpload').files;
+    if (!files.length) {
+        alert("Please upload at least one broker PDF.");
+        return;
+    }
 
-  const pdfDoc = await PDFDocument.load(existingPdfBytes);
-  const form = pdfDoc.getForm();
+    for (let i = 0; i < files.length; i++) {
+        try {
+            const file = files[i];
+            const arrayBuffer = await file.arrayBuffer();
+            const pdfDoc = await PDFDocument.load(arrayBuffer);
+            const form = pdfDoc.getForm();
 
-  // Assuming the PDF fields are named "buyer", "seller", "address", "addendums"
-  try {
-    form.getTextField('buyer').setText(buyer);
-    form.getTextField('seller').setText(seller);
-    form.getTextField('address').setText(address);
-    form.getTextField('addendums').setText(addendums);
+            // Fill text fields — make sure your PDF fields match these names
+            try { form.getTextField('buyer').setText(buyer); } catch {}
+            try { form.getTextField('seller').setText(seller); } catch {}
+            try { form.getTextField('address').setText(address); } catch {}
+            try { form.getTextField('addendums').setText(addendums); } catch {}
 
-    const pdfBytes = await pdfDoc.save();
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'filled_' + file.name;
+            link.click();
 
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'filled_contract.pdf';
-    link.click();
-  } catch (err) {
-    console.error("Error filling PDF fields:", err);
-    alert("PDF field names must match template. Check console.");
-  }
+        } catch (err) {
+            console.error("Error processing PDF:", err);
+            alert("Error filling " + files[i].name + ". Check console.");
+        }
+    }
+
+    document.getElementById('status').innerText = "All PDFs filled and downloaded!";
 });
